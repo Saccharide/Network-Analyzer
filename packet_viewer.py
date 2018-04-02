@@ -36,7 +36,7 @@ def ethernet_frame(data):
 # Returns human readable MAC address (AA:BB:CC:DD)
 def get_mac_addr(bytes_addr):
     bytes_str = map('{:02x}'.format, bytes_addr)
-    return mac_addr  = ':'.join(bytes_str).upper()
+    return ':'.join(bytes_str).upper()
 
 
 
