@@ -6,10 +6,25 @@
 ##################################################################################################
 
 
-################
 import socket
 import struct
 import textwrap
+
+
+def main():
+    # Last parameter makes sure conversion of big/small endian correctly
+    s = socket.socket(socket.AF_PACKET, socket.SOCK_RAW, socket.ntohs(3))
+
+    # Main infinite loop
+
+    while True:
+        raw_data, addr = s.recvfrom(65536)
+        
+        # Unpacks the raw data
+        dest_mac, src_mac, eth_proto, data = ethernet_frame(raw_data)
+        print("\nEthernet Frame:")
+        print("Destination: {}, Source: {}, Protocol: {}".format(dest_mac, src_mac, eth_proto))
+
 
 # Unpack ethernet frame, return the destination mac addr, source mac addr, and type (IPV4, IPV6, ARP Request/Response)
 def ethernet_frame(data):
@@ -23,3 +38,6 @@ def get_mac_addr(bytes_addr):
     bytes_str = map('{:02x}'.format, bytes_addr)
     return mac_addr  = ':'.join(bytes_str).upper()
 
+
+
+main()
